@@ -1,0 +1,56 @@
+---
+title: "R Workshop Table one template"
+author: "Charlie Keown-Stoneman"
+date: "October 29, 2020"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(haven)
+library(tableone)
+library(knitr)
+library(dplyr)
+```
+
+## R Markdown
+
+This is an R Markdown template for creating a table one in R.
+
+```{r, echo=FALSE}
+#this reads in the data
+load("Workshop_data.RData")
+
+#Create table one values
+tab1 <- CreateTableOne(data = baseline_data,
+                         vars = c("CHILDGENDER1","ageinmonths", "momethnicity", "cmr_zscr_tot_adj",
+                               "zbmi","zbmi_group"),
+                         #strata = c("CHILDGENDER1"),
+                         test = F)
+
+#decide how to present them (e.g. missing values %)
+tab1 <- print(tab1, showAllLevels = T,
+                missing = T, printToggle = F,
+               # nonnormal = c("bmi", 
+               #               "D_ICUADMS_CFS_STD_n", 
+               #               "daysinhosp", "daysinicu",
+               #               "d_icu_cum"),
+                explain = F,
+                catDigits = 1, contDigits = 2)
+
+#Customize some of the row names (you can also do this in Word)
+rownames(tab1)[rownames(tab1)=="CHILDGENDER1"] <- c("Child Sex")
+rownames(tab1)[rownames(tab1)=="ageinmonths"] <- c("Age (months)")
+rownames(tab1)[rownames(tab1)=="momethnicity"] <- c("Maternal Ethnicity")
+rownames(tab1)[rownames(tab1)=="cmr_zscr_tot_adj"] <- c("CMR z-score")
+rownames(tab1)[rownames(tab1)=="zbmi"] <- c("BMI z-score^b^")
+rownames(tab1)[rownames(tab1)=="zbmi_group"] <- c("Weight status^c^")
+
+colnames(tab1)[colnames(tab1)=="Missing"] <- "Missing %"
+
+kable(tab1, caption = "Table one^a^") 
+```
+
+^a^For numeric variables Mean (SD) are reported, for categorical variables, N (%) are reported.  
+^b^Standardized using the WHO growth standards.  
+^c^Based on the WHO BMI z-score cut offs

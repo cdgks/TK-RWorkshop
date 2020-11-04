@@ -1,7 +1,7 @@
 ##############################################
 #	Multiple imputation with MICE example	#
 #	Charlie Keown-Stoneman				#
-#	2019-07-24						#
+#	2020-11-04						#
 ##############################################
 
 #Load mice package

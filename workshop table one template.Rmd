@@ -1,7 +1,7 @@
 ---
 title: "R Workshop Table one template"
 author: "Charlie Keown-Stoneman"
-date: "October 29, 2020"
+date: "November 04, 2020"
 output: word_document
 ---
 
